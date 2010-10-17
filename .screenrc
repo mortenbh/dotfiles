@@ -1,0 +1,2 @@
+termcapinfo xterm* ti@:te@ # scrolling
+term "screen-256color" # colors
