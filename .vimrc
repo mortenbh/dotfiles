@@ -2,7 +2,7 @@
 "
 "    Morten Bojsen-Hansen <morten@alas.dk>
 "
-"    Last modified: 10-07-2010 00:31:55
+"    Last modified: 17-02-2011 16:09:27
 "
 "    This requires Debian packages:
 "    * vim-addon-manager
@@ -25,7 +25,7 @@ filetype plugin indent on " automatically load indent and plugins for detected f
 "set clipboard=unnamed " yank and put to OS-wide clipboard
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Vim UI
+" Vim behaviour and UI
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set wildmenu " enhanced command-line auto-completion
 set wildmode=full:longest " when auto-completing, show navigatable list and longest common prefix
@@ -44,10 +44,13 @@ set backspace=indent,eol,start " allow backspacing over everything in insert mod
 set listchars=tab:»·,trail:· " how to display tabs and trailing spaces in list mode (:set list)
 set statusline=%t\ (%Y)%=\ %m%r\ %c-%l/%L\ (%P) " status-line format 
 set laststatus=2 " always show the status-line
+set guioptions-=T " remove toolbar
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Searching
+" History, marks and search
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set history=1000 " number of commands and search patterns remembered (and stored in viminfo)
+set viminfo='1000 " number of files to store marks for in viminfo (see history)
 set showmatch " show matching bracket
 set nohlsearch " do not highlight searched for phrases
 set incsearch " highlight match *while* typing search pattern
@@ -58,31 +61,34 @@ set ignorecase " ignore case in searches
 " Themes and colours
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 syntax enable " Enable syntax highlighting.
-if has("gui_running") " Use different color schemes depending on GUI or not.
-	source ~/.vim/colors/jellybeans.vim
-else 
-	source ~/.vim/colors/darkblack.vim 
-endif
+colorscheme jellybeans " My favourite color scheme
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Text formatting / layout
+" Text formatting and layout
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set autoindent " Copy indent from current line when starting a new line.
-set noexpandtab " Do not expand tabs to spaces.
-set shiftwidth=3 " Number of spaces to use for each step of (auto)indent.
-set tabstop=3 " Set the number of spaces a TAB counts for.
-set nowrap " Disable wrapping of lines.
-"set textwidth=110 " Automatically insert newline after 110 characters
-set smarttab " Hmm.. :)
-set pastetoggle=<F11> " Toggle paste-mode with F11
+set autoindent " copy indent from current line when starting a new line.
+set noexpandtab " do not expand tabs to spaces.
+set shiftwidth=3 " number of spaces to use for each step of (auto)indent.
+set tabstop=3 " set the number of spaces a TAB counts for.
+set nowrap " disable wrapping of lines.
+"set textwidth=110 " automatically insert newline after 110 characters
+set smarttab " hmm.. :)
+set pastetoggle=<F11> " toggle paste-mode with F11
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Files / backup
+" File format, encoding and types
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set fileformat=unix " default file format
 set encoding=utf-8 " default encoding
-set history=1000 " number of commands and search patterns remembered (and stored in viminfo)
-set viminfo='1000 " number of files to store marks for in viminfo (see history)
+
+au BufRead,BufNewFile *.tex set textwidth=78
+au BufRead,BufNewFile *.markdown set filetype=mkd
+au BufRead,BufNewFile *.cl set filetype=opencl
+au BufRead,BufNewFile wscript set filetype=python
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Backup
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set backup " always keep a backup of edited files
 set backupdir=~/.backup/ " Directory to store backup files in
 
@@ -97,11 +103,6 @@ if has("unix")
     endif
 endif
 
-" updates last modified date and time within the first 10 lines
-function! UpdateLastModified()
-	silent 1,10s/\(Last modified:\).*/\="Last modified: ".strftime("%d-%m-%Y %X")/e
-endfunction
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Convenience mappings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -111,8 +112,21 @@ nnoremap <C-w>c :bd<CR>
 nnoremap <C-w>q :bd<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Addons
+" Misc
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" workaround for messed up background colour when quitting vim in screen
+au VimLeave * :set term=screen
+
+" updates last modified date and time within the first 10 lines
+function! UpdateLastModified()
+	silent 1,10s/\(Last modified:\).*/\="Last modified: ".strftime("%d-%m-%Y %X")/e
+endfunction
+
 " make selected tab in minibufexpl stand out more
 highlight link MBEVisibleNormal Error
 highlight link MBEVisibleChanged Error
+
+" tabline silliness
+"set guioptions-=e " non-gui tabline
+"set showtabline=2 " always show tabline
+"let g:TabLineSet_buffers_list=1
