@@ -2,7 +2,7 @@
 "
 "    Morten Bojsen-Hansen <morten@alas.dk>
 "
-"    Last modified: 17-02-2011 16:09:27
+"    Last modified: 17-02-2011 16:33:34
 "
 "    This requires Debian packages:
 "    * vim-addon-manager
@@ -94,7 +94,6 @@ set backupdir=~/.backup/ " Directory to store backup files in
 
 " suffix all backups with the current date and time
 au BufWritePre * let &backupext = ' ~ ' . strftime("%d-%m-%Y %X")
-au BufWritePre .vimrc call UpdateLastModified()
 
 " create ~/.backup/ if it doesn't already exist
 if has("unix")
@@ -117,14 +116,15 @@ nnoremap <C-w>q :bd<CR>
 " workaround for messed up background colour when quitting vim in screen
 au VimLeave * :set term=screen
 
+" make selected tab in minibufexpl stand out more
+highlight link MBEVisibleNormal Error
+highlight link MBEVisibleChanged Error
+
 " updates last modified date and time within the first 10 lines
 function! UpdateLastModified()
 	silent 1,10s/\(Last modified:\).*/\="Last modified: ".strftime("%d-%m-%Y %X")/e
 endfunction
-
-" make selected tab in minibufexpl stand out more
-highlight link MBEVisibleNormal Error
-highlight link MBEVisibleChanged Error
+au BufWritePre * call UpdateLastModified()
 
 " tabline silliness
 "set guioptions-=e " non-gui tabline
