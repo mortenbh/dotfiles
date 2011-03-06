@@ -2,7 +2,7 @@
 "
 "    Morten Bojsen-Hansen <morten@alas.dk>
 "
-"    Last modified: 17-02-2011 16:33:34
+"    Last modified: 23-02-2011 07:51:45 PM
 "
 "    This requires Debian packages:
 "    * vim-addon-manager
@@ -66,7 +66,8 @@ colorscheme jellybeans " My favourite color scheme
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Text formatting and layout
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set autoindent " copy indent from current line when starting a new line.
+"set autoindent " copy indent from current line when starting a new line.
+set cindent " enable C-style indention (works for other languages too)
 set noexpandtab " do not expand tabs to spaces.
 set shiftwidth=3 " number of spaces to use for each step of (auto)indent.
 set tabstop=3 " set the number of spaces a TAB counts for.
@@ -74,6 +75,7 @@ set nowrap " disable wrapping of lines.
 "set textwidth=110 " automatically insert newline after 110 characters
 set smarttab " hmm.. :)
 set pastetoggle=<F11> " toggle paste-mode with F11
+let c_space_errors = 1 " highlight trailing spaces and more for c/cpp
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " File format, encoding and types
