@@ -2,7 +2,7 @@
 "
 "    Morten Bojsen-Hansen <morten@alas.dk>
 "
-"    Last modified: 23-02-2011 07:51:45 PM
+"    Last modified: 06-03-2011 12:19:13 PM
 "
 "    This requires Debian packages:
 "    * vim-addon-manager
@@ -116,7 +116,9 @@ nnoremap <C-w>q :bd<CR>
 " Misc
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " workaround for messed up background colour when quitting vim in screen
-au VimLeave * :set term=screen
+if !has("gui_running")
+	au VimLeave * :set term=screen
+endif
 
 " make selected tab in minibufexpl stand out more
 highlight link MBEVisibleNormal Error
@@ -124,7 +126,10 @@ highlight link MBEVisibleChanged Error
 
 " updates last modified date and time within the first 10 lines
 function! UpdateLastModified()
-	silent 1,10s/\(Last modified:\).*/\="Last modified: ".strftime("%d-%m-%Y %X")/e
+	let m = 1
+	let n = min([10,line('$')])
+	let cmd = 's/\(Last modified:\).*/\="Last modified: ".strftime("%d-%m-%Y %X")/e'
+	exe m . ',' . n . cmd
 endfunction
 au BufWritePre * call UpdateLastModified()
 
