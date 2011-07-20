@@ -2,7 +2,7 @@
 "
 "    Morten Bojsen-Hansen <morten@alas.dk>
 "
-"    Last modified: 18-07-2011 01:47:55 PM
+"    Last modified: 20-07-2011 12:54:02
 "
 "    This requires Debian packages:
 "    * vim-addon-manager
@@ -83,7 +83,7 @@ let c_space_errors = 1 " highlight trailing spaces and more for c/cpp
 set fileformat=unix " default file format
 set encoding=utf-8 " default encoding
 
-au BufRead,BufNewFile *.tex set textwidth=78 nocindent
+au BufRead,BufNewFile *.tex set textwidth=78 nocindent spell
 au BufRead,BufNewFile *.markdown set filetype=mkd
 au BufRead,BufNewFile *.cl set filetype=opencl
 au BufRead,BufNewFile wscript set filetype=python
