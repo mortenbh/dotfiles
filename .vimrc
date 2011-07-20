@@ -2,7 +2,7 @@
 "
 "    Morten Bojsen-Hansen <morten@alas.dk>
 "
-"    Last modified: 20-07-2011 12:54:02
+"    Last modified: 20-07-2011 18:31:05
 "
 "    This requires Debian packages:
 "    * vim-addon-manager
@@ -84,7 +84,7 @@ set fileformat=unix " default file format
 set encoding=utf-8 " default encoding
 
 au BufRead,BufNewFile *.tex set textwidth=78 nocindent spell
-au BufRead,BufNewFile *.markdown set filetype=mkd
+au BufRead,BufNewFile *.markdown set filetype=mkd textwidth=78 nocindent spell
 au BufRead,BufNewFile *.cl set filetype=opencl
 au BufRead,BufNewFile wscript set filetype=python
 
