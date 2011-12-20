@@ -2,7 +2,7 @@
 "
 "    Morten Bojsen-Hansen <morten@alas.dk>
 "
-"    Last modified: 20-07-2011 18:31:05
+"    Last modified: 20-12-2011 20:53:58
 "
 "    This requires Debian packages:
 "    * vim-addon-manager
@@ -132,6 +132,9 @@ function! UpdateLastModified()
 	exe m . ',' . n . cmd
 endfunction
 au BufWritePre * call UpdateLastModified()
+
+" csupport |DATE| format
+let g:C_FormatDate = "%d-%m-%Y"
 
 " tabline silliness
 "set guioptions-=e " non-gui tabline
