@@ -2,7 +2,7 @@
 #
 #    Morten Bojsen-Hansen <morten@alas.dk>
 #
-#    Last modified: 06-03-2011 03:15:36 PM
+#    Last modified: 02-07-2013 21:28:48
 
 ################################################################################
 # Prompt
@@ -36,6 +36,9 @@ bindkey -e # emacs-style key bindings
 zstyle :compinstall filename '/home/mortenbh/.zshrc'
 autoload -Uz compinit
 compinit
+
+bindkey "^[r" history-incremental-search-forward # forward search on alt+r 
+export TERM='xterm-256color' # advertise support for 256 colors
 
 ################################################################################
 # Aliases
