@@ -2,7 +2,7 @@
 #
 #    Morten Bojsen-Hansen <morten@alas.dk>
 #
-#    Last modified: 02-07-2013 21:28:48
+#    Last modified: 21-08-2013 11:33:45
 
 ################################################################################
 # Prompt
@@ -48,7 +48,7 @@ alias ll='ls -lh'
 alias lla='ll -a'
 
 alias grep='grep --color=always'
-alias fgrep='fgrep --color=always -n'
+alias fgrep='fgrep --color=always -nI'
 
 alias less='zless' # use zless always
 alias zless='zless -R' # display piped colors
