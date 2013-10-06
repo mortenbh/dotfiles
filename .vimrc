@@ -2,27 +2,16 @@
 "
 "    Morten Bojsen-Hansen <morten@alas.dk>
 "
-"    Last modified: 20-12-2011 20:53:58
+"    Last modified: 06-10-2013 13:20:41
 "
-"    This requires Debian packages:
-"    * vim-addon-manager
-"    * vim-scripts
-"    
-"    $ aptitude install vim-addon-manager vim-scripts
-"    
-"    And requires vim addons:
-"    * colors sampler pack
-"    * minibufexplorer
-"    
-"    $ vim-addons install "colors sampler pack" minibufexplorer    
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible " don't emulate vi's limitations and quirks
-set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
+runtime bundle/pathogen/autoload/pathogen.vim
+execute pathogen#infect()
 filetype plugin indent on " automatically load indent and plugins for detected filetype
-"set clipboard=unnamed " yank and put to OS-wide clipboard
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim behaviour and UI
@@ -66,13 +55,11 @@ colorscheme jellybeans " My favourite color scheme
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Text formatting and layout
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"set autoindent " copy indent from current line when starting a new line.
 set cindent " enable C-style indention (works for other languages too)
 set noexpandtab " do not expand tabs to spaces.
 set shiftwidth=3 " number of spaces to use for each step of (auto)indent.
 set tabstop=3 " set the number of spaces a TAB counts for.
 set nowrap " disable wrapping of lines.
-"set textwidth=110 " automatically insert newline after 110 characters
 set smarttab " hmm.. :)
 set pastetoggle=<F11> " toggle paste-mode with F11
 let c_space_errors = 1 " highlight trailing spaces and more for c/cpp
@@ -107,10 +94,10 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Convenience mappings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <C-right> :bn<CR>
-nnoremap <C-left> :bp<CR>
-nnoremap <C-w>c :bd<CR>
-nnoremap <C-w>q :bd<CR>
+nnoremap <C-right> :MBEbn<CR>
+nnoremap <C-left> :MBEbp<CR>
+nnoremap <C-w>d :MBEbd<CR>
+nnoremap <C-w>q :MBEbd<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Misc
@@ -121,8 +108,11 @@ if !has("gui_running")
 endif
 
 " make selected tab in minibufexpl stand out more
-highlight link MBEVisibleNormal Error
-highlight link MBEVisibleChanged Error
+
+highlight link MBEVisibleNormal MBENormal
+highlight link MBEVisibleChanged MBEChanged
+highlight link MBEVisibleActiveNormal Error
+highlight link MBEVisibleActiveChanged Error
 
 " updates last modified date and time within the first 10 lines
 function! UpdateLastModified()
@@ -135,8 +125,3 @@ au BufWritePre * call UpdateLastModified()
 
 " csupport |DATE| format
 let g:C_FormatDate = "%d-%m-%Y"
-
-" tabline silliness
-"set guioptions-=e " non-gui tabline
-"set showtabline=2 " always show tabline
-"let g:TabLineSet_buffers_list=1
