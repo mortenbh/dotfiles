@@ -7,3 +7,6 @@
 [submodule ".vim/bundle/minibufexpl"]
 	path = .vim/bundle/minibufexpl
 	url = https://github.com/techlivezheng/vim-plugin-minibufexpl.git
+[submodule ".vim/bundle/cpp-vim"]
+	path = .vim/bundle/cpp-vim
+	url = https://github.com/vim-jp/cpp-vim.git
