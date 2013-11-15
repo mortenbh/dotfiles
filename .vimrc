@@ -2,7 +2,7 @@
 "
 "    Morten Bojsen-Hansen <morten@alas.dk>
 "
-"    Last modified: 06-10-2013 13:20:41
+"    Last modified: 15-11-2013 15:51:19
 "
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -29,6 +29,7 @@ set showcmd " show (partial) commands as they are typed in right-most part of co
 set showfulltag " show full tag pattern when completing tag from tagsfile (shows e.g. C parameters)
 set showmode " show the active mode in the command-line
 set scrolloff=10 " minimum number of screen lines to keep above and below the cursor
+set cursorline " highlight line currently under the cursor
 set backspace=indent,eol,start " allow backspacing over everything in insert mode
 set listchars=tab:»·,trail:· " how to display tabs and trailing spaces in list mode (:set list)
 set statusline=%t\ (%Y)%=\ %m%r\ %c-%l/%L\ (%P) " status-line format 
