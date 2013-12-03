@@ -2,7 +2,7 @@
 "
 "    Morten Bojsen-Hansen <morten@alas.dk>
 "
-"    Last modified: 03-12-2013 16:14:08
+"    Last modified: 03-12-2013 16:21:55
 "
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -35,6 +35,8 @@ set listchars=tab:»·,trail:· " how to display tabs and trailing spaces in lis
 set statusline=%t\ (%Y)%=\ %m%r\ %c-%l/%L\ (%P) " status-line format 
 set laststatus=2 " always show the status-line
 set guioptions-=T " remove toolbar
+set splitbelow " new window appears below in horizontal split
+set splitright " new window appears to the right in vertical split
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " History, marks and search
@@ -97,7 +99,7 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <C-h> :bp<CR>
 nnoremap <C-l> :bn<CR>
-nnoremap <C-w>d :bd<CR>
+nnoremap <C-w>d :Bdelete<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plug-ins
