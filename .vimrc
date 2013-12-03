@@ -2,7 +2,7 @@
 "
 "    Morten Bojsen-Hansen <morten@alas.dk>
 "
-"    Last modified: 03-12-2013 16:08:35
+"    Last modified: 03-12-2013 16:14:08
 "
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -102,6 +102,10 @@ nnoremap <C-w>d :bd<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plug-ins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" airline
+let g:airline_powerline_fonts = 1 " use powerline fonts
+let g:airline#extensions#tabline#enabled = 1 " show buffers
+
 " csupport |DATE| format
 let g:C_FormatDate = "%d-%m-%Y"
 
