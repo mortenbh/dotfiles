@@ -2,7 +2,7 @@
 "
 "    Morten Bojsen-Hansen <morten@alas.dk>
 "
-"    Last modified: 03-12-2013 16:21:55
+"    Last modified: 03-12-2013 21:48:43
 "
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -38,6 +38,10 @@ set guioptions-=T " remove toolbar
 set splitbelow " new window appears below in horizontal split
 set splitright " new window appears to the right in vertical split
 
+" automatically open/close quickfix window in full-width horizontal
+au QuickFixCmdPost [^l]* nested botright cwindow
+au QuickFixCmdPost    l* nested botright lwindow
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " History, marks and search
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -72,6 +76,7 @@ let c_space_errors = 1 " highlight trailing spaces and more for c/cpp
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set fileformat=unix " default file format
 set encoding=utf-8 " default encoding
+set autowrite " automatically write current file on :make
 
 au BufRead,BufNewFile *.tex set textwidth=78 nocindent spell
 au BufRead,BufNewFile *.markdown set filetype=mkd textwidth=78 nocindent spell
@@ -100,6 +105,7 @@ endif
 nnoremap <C-h> :bp<CR>
 nnoremap <C-l> :bn<CR>
 nnoremap <C-w>d :Bdelete<CR>
+nnoremap <F8> :Make<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plug-ins
@@ -127,3 +133,11 @@ function! UpdateLastModified()
 	exe m . ',' . n . cmd
 endfunction
 au BufWritePre * call UpdateLastModified()
+
+" avoid stupid 'hit enter' prompt on :make
+command! Make silent make | redraw!
+
+" use waf for :make if available
+if filereadable(getcwd() . "/waf")
+  set makeprg=./waf\ release_build
+endif
