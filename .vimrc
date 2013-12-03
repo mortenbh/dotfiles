@@ -2,7 +2,7 @@
 "
 "    Morten Bojsen-Hansen <morten@alas.dk>
 "
-"    Last modified: 15-11-2013 15:51:19
+"    Last modified: 03-12-2013 15:56:51
 "
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -101,19 +101,24 @@ nnoremap <C-w>d :MBEbd<CR>
 nnoremap <C-w>q :MBEbd<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plug-ins
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" csupport |DATE| format
+let g:C_FormatDate = "%d-%m-%Y"
+
+" make selected tab in minibufexpl stand out more
+highlight link MBEVisibleNormal MBENormal
+highlight link MBEVisibleChanged MBEChanged
+highlight link MBEVisibleActiveNormal Error
+highlight link MBEVisibleActiveChanged Error
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Misc
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " workaround for messed up background colour when quitting vim in screen
 if !has("gui_running")
 	au VimLeave * :set term=screen
 endif
-
-" make selected tab in minibufexpl stand out more
-
-highlight link MBEVisibleNormal MBENormal
-highlight link MBEVisibleChanged MBEChanged
-highlight link MBEVisibleActiveNormal Error
-highlight link MBEVisibleActiveChanged Error
 
 " updates last modified date and time within the first 10 lines
 function! UpdateLastModified()
@@ -123,6 +128,3 @@ function! UpdateLastModified()
 	exe m . ',' . n . cmd
 endfunction
 au BufWritePre * call UpdateLastModified()
-
-" csupport |DATE| format
-let g:C_FormatDate = "%d-%m-%Y"
