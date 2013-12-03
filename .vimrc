@@ -2,7 +2,7 @@
 "
 "    Morten Bojsen-Hansen <morten@alas.dk>
 "
-"    Last modified: 03-12-2013 15:56:51
+"    Last modified: 03-12-2013 16:08:35
 "
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -95,22 +95,15 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Convenience mappings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <C-right> :MBEbn<CR>
-nnoremap <C-left> :MBEbp<CR>
-nnoremap <C-w>d :MBEbd<CR>
-nnoremap <C-w>q :MBEbd<CR>
+nnoremap <C-h> :bp<CR>
+nnoremap <C-l> :bn<CR>
+nnoremap <C-w>d :bd<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plug-ins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " csupport |DATE| format
 let g:C_FormatDate = "%d-%m-%Y"
-
-" make selected tab in minibufexpl stand out more
-highlight link MBEVisibleNormal MBENormal
-highlight link MBEVisibleChanged MBEChanged
-highlight link MBEVisibleActiveNormal Error
-highlight link MBEVisibleActiveChanged Error
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Misc
