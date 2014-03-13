@@ -2,7 +2,7 @@
 #
 #    Morten Bojsen-Hansen <morten@alas.dk>
 #
-#    Last modified: 21-08-2013 11:33:45
+#    Last modified: 26-02-2014 14:48:09
 
 ################################################################################
 # Prompt
@@ -22,6 +22,7 @@ SAVEHIST=1000 # history to save
 setopt INC_APPEND_HISTORY # append to history incrementally instead of overwriting
 setopt HIST_FCNTL_LOCK # lock using fcntl if available
 setopt HIST_IGNORE_ALL_DUPS # no duplicates in history (old deleted)
+setopt NO_FLOW_CONTROL # disable flow control (ctrl+s/q)
 
 ################################################################################
 # Misc
@@ -38,7 +39,7 @@ autoload -Uz compinit
 compinit
 
 bindkey "^[r" history-incremental-search-forward # forward search on alt+r 
-export TERM='xterm-256color' # advertise support for 256 colors
+#export TERM='xterm-256color' # advertise support for 256 colors
 
 ################################################################################
 # Aliases
