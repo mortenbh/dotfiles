@@ -2,7 +2,7 @@
 "
 "    Morten Bojsen-Hansen <morten@alas.dk>
 "
-"    Last modified: 03-12-2013 21:48:43
+"    Last modified: 13-03-2014 10:52:00
 "
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -102,10 +102,17 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Convenience mappings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <C-h> :bp<CR>
-nnoremap <C-l> :bn<CR>
-nnoremap <C-w>d :Bdelete<CR>
+nnoremap <C-h> <C-w><C-h>
+nnoremap <C-j> <C-w><C-j>
+nnoremap <C-k> <C-w><C-k>
+nnoremap <C-l> <C-w><C-l>
+
+nnoremap <S-h> :bp<CR>
+nnoremap <S-l> :bn<CR>
+nnoremap <C-d> :Bdelete<CR>
 nnoremap <F8> :Make<CR>
+
+nnoremap <C-b> :CtrlPBuffer<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plug-ins
@@ -120,11 +127,6 @@ let g:C_FormatDate = "%d-%m-%Y"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Misc
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" workaround for messed up background colour when quitting vim in screen
-if !has("gui_running")
-	au VimLeave * :set term=screen
-endif
-
 " updates last modified date and time within the first 10 lines
 function! UpdateLastModified()
 	let m = 1
@@ -135,7 +137,7 @@ endfunction
 au BufWritePre * call UpdateLastModified()
 
 " avoid stupid 'hit enter' prompt on :make
-command! Make silent make | redraw!
+"command! Make silent make | redraw!
 
 " use waf for :make if available
 if filereadable(getcwd() . "/waf")
