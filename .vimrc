@@ -2,7 +2,7 @@
 "
 "    Morten Bojsen-Hansen <morten@alas.dk>
 "
-"    Last modified: 13-03-2014 10:52:00
+"    Last modified: 21-05-2014 08:40:55
 "
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -143,3 +143,6 @@ au BufWritePre * call UpdateLastModified()
 if filereadable(getcwd() . "/waf")
   set makeprg=./waf\ release_build
 endif
+
+" use C++-style comments
+autocmd FileType cpp set commentstring=\/\/%s
