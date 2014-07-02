@@ -110,6 +110,7 @@ nnoremap <C-l> <C-w><C-l>
 nnoremap <S-h> :bp<CR>
 nnoremap <S-l> :bn<CR>
 nnoremap <C-d> :Bdelete<CR>
+nnoremap <C-c> <C-w><C-c>
 nnoremap <F8> :Make<CR>
 
 nnoremap <C-b> :CtrlPBuffer<CR>
