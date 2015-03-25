@@ -2,15 +2,24 @@
 "
 "    Morten Bojsen-Hansen <morten@alas.dk>
 "
-"    Last modified: 21-05-2014 08:40:55
+"    Last modified: 25-03-2015 07:31:02 PM
 "
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" vim-plug plugin manager
+call plug#begin('~/.vim/plugged')
+Plug 'bling/vim-airline' " pretty prompt
+Plug 'kien/ctrlp.vim' " fuzzy search for files, buffers etc.
+Plug 'nanotech/jellybeans.vim' " dark color scheme
+Plug 'tpope/vim-commentary' " easily comments using gc
+Plug 'moll/vim-bbye' " delete buffers without messing up your layout
+Plug 'mhinz/vim-signify' " show added, deleted and modified lines from VCS
+call plug#end()
+
 set nocompatible " don't emulate vi's limitations and quirks
-runtime bundle/pathogen/autoload/pathogen.vim
-execute pathogen#infect()
 filetype plugin indent on " automatically load indent and plugins for detected filetype
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
