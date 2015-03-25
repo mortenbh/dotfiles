@@ -2,7 +2,7 @@
 "
 "    Morten Bojsen-Hansen <morten@alas.dk>
 "
-"    Last modified: 25-03-2015 07:31:02 PM
+"    Last modified: 25-03-2015 07:54:27 PM
 "
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -11,6 +11,7 @@
 
 " vim-plug plugin manager
 call plug#begin('~/.vim/plugged')
+Plug 'tpope/vim-sensible' " sensible defaults
 Plug 'bling/vim-airline' " pretty prompt
 Plug 'kien/ctrlp.vim' " fuzzy search for files, buffers etc.
 Plug 'nanotech/jellybeans.vim' " dark color scheme
@@ -19,13 +20,9 @@ Plug 'moll/vim-bbye' " delete buffers without messing up your layout
 Plug 'mhinz/vim-signify' " show added, deleted and modified lines from VCS
 call plug#end()
 
-set nocompatible " don't emulate vi's limitations and quirks
-filetype plugin indent on " automatically load indent and plugins for detected filetype
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim behaviour and UI
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set wildmenu " enhanced command-line auto-completion
 set wildmode=full:longest " when auto-completing, show navigatable list and longest common prefix
 set wildignore=CVS,.svn,.git,.hg,*.o,*.a,*.class,*.so,*.obj,*.swp,*.jpg,*.png,*.gif " ignore when auto-completing
 set shellslash " always use forward slashes in command-line auto-completion
@@ -34,15 +31,10 @@ set hidden " can change buffers without saving
 set icon " let vim set the text of the window icon
 set mouse=a " enable the use of mouse clicks in all modes
 set number " line numbers
-set showcmd " show (partial) commands as they are typed in right-most part of command-line
 set showfulltag " show full tag pattern when completing tag from tagsfile (shows e.g. C parameters)
 set showmode " show the active mode in the command-line
 set scrolloff=10 " minimum number of screen lines to keep above and below the cursor
 set cursorline " highlight line currently under the cursor
-set backspace=indent,eol,start " allow backspacing over everything in insert mode
-set listchars=tab:»·,trail:· " how to display tabs and trailing spaces in list mode (:set list)
-set statusline=%t\ (%Y)%=\ %m%r\ %c-%l/%L\ (%P) " status-line format 
-set laststatus=2 " always show the status-line
 set guioptions-=T " remove toolbar
 set splitbelow " new window appears below in horizontal split
 set splitright " new window appears to the right in vertical split
@@ -54,18 +46,14 @@ au QuickFixCmdPost    l* nested botright lwindow
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " History, marks and search
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set history=1000 " number of commands and search patterns remembered (and stored in viminfo)
-set viminfo='1000 " number of files to store marks for in viminfo (see history)
 set showmatch " show matching bracket
 set nohlsearch " do not highlight searched for phrases
-set incsearch " highlight match *while* typing search pattern
 set smartcase " overrides ignorecase if search pattern contains upper-case
 set ignorecase " ignore case in searches
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Themes and colours
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-syntax enable " Enable syntax highlighting.
 colorscheme jellybeans " My favourite color scheme
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -76,7 +64,6 @@ set noexpandtab " do not expand tabs to spaces.
 set shiftwidth=3 " number of spaces to use for each step of (auto)indent.
 set tabstop=3 " set the number of spaces a TAB counts for.
 set nowrap " disable wrapping of lines.
-set smarttab " hmm.. :)
 set pastetoggle=<F11> " toggle paste-mode with F11
 let c_space_errors = 1 " highlight trailing spaces and more for c/cpp
 
@@ -84,7 +71,6 @@ let c_space_errors = 1 " highlight trailing spaces and more for c/cpp
 " File format, encoding and types
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set fileformat=unix " default file format
-set encoding=utf-8 " default encoding
 set autowrite " automatically write current file on :make
 
 au BufRead,BufNewFile *.tex set textwidth=78 nocindent spell
