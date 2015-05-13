@@ -115,6 +115,10 @@ nnoremap <F8> :Make<CR>
 
 nnoremap <C-b> :CtrlPBuffer<CR>
 
+" mirror mappings from normal mode; useful when using block visual mode in vimdiff
+xnoremap <silent> <leader>do :diffget<CR>:diffupdate<CR>
+xnoremap <silent> <leader>dp :diffput<CR>:diffupdate<CR>
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plug-ins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
