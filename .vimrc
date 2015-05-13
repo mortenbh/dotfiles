@@ -2,8 +2,6 @@
 "
 "    Morten Bojsen-Hansen <morten@alas.dk>
 "
-"    Last modified: 25-03-2015 07:54:27 PM
-"
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General
@@ -123,15 +121,6 @@ let g:C_FormatDate = "%d-%m-%Y"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Misc
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" updates last modified date and time within the first 10 lines
-function! UpdateLastModified()
-	let m = 1
-	let n = min([10,line('$')])
-	let cmd = 's/\(Last modified:\).*/\="Last modified: ".strftime("%d-%m-%Y %X")/e'
-	exe m . ',' . n . cmd
-endfunction
-au BufWritePre * call UpdateLastModified()
-
 " avoid stupid 'hit enter' prompt on :make
 "command! Make silent make | redraw!
 
