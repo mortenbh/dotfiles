@@ -15,7 +15,7 @@ Plug 'kien/ctrlp.vim' " fuzzy search for files, buffers etc.
 Plug 'nanotech/jellybeans.vim' " dark color scheme
 Plug 'tpope/vim-commentary' " easily comments using gc
 Plug 'moll/vim-bbye' " delete buffers without messing up your layout
-Plug 'mhinz/vim-signify' " show added, deleted and modified lines from VCS
+Plug 'airblade/vim-gitgutter' " show added, deleted and modified lines from Git
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -81,6 +81,7 @@ au BufRead,BufNewFile wscript set filetype=python
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set backup " always keep a backup of edited files
 set backupdir=~/.backup/ " Directory to store backup files in
+set updatetime=750 " how often to save swap file in ms (and update gitgutter signs)
 
 " suffix all backups with the current date and time
 au BufWritePre * let &backupext = ' ~ ' . strftime("%d-%m-%Y %X")
