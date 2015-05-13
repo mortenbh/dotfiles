@@ -10,6 +10,7 @@
 " vim-plug plugin manager
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-sensible' " sensible defaults
+Plug 'tpope/vim-repeat' " more versatile repeat (.) command
 Plug 'bling/vim-airline' " pretty prompt
 Plug 'kien/ctrlp.vim' " fuzzy search for files, buffers etc.
 Plug 'nanotech/jellybeans.vim' " dark color scheme
