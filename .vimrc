@@ -16,6 +16,9 @@ Plug 'nanotech/jellybeans.vim' " dark color scheme
 Plug 'tpope/vim-commentary' " easily comments using gc
 Plug 'moll/vim-bbye' " delete buffers without messing up your layout
 Plug 'airblade/vim-gitgutter' " show added, deleted and modified lines from Git
+Plug 'kana/vim-textobj-user' " user-defined text objects
+Plug 'Julian/vim-textobj-variable-segment' " snake_case and camelCase (v)
+Plug 'sgur/vim-textobj-parameter' " function arguments (,)
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
