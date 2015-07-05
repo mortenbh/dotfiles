@@ -142,7 +142,7 @@ let g:C_FormatDate = "%d-%m-%Y"
 " Misc
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " avoid stupid 'hit enter' prompt on :make
-"command! Make silent make | redraw!
+command! -nargs=* Make silent make <args> | redraw!
 
 " use waf for :make if available
 if filereadable(getcwd() . "/waf")
