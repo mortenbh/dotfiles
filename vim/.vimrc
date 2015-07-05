@@ -146,7 +146,7 @@ command! -nargs=* Make silent make <args> | redraw!
 
 " use waf for :make if available
 if filereadable(getcwd() . "/waf")
-  set makeprg=./waf\ release_build
+  set makeprg=./waf
 endif
 
 " use C++-style comments
