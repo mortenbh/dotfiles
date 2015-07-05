@@ -83,19 +83,28 @@ au BufRead,BufNewFile *.cl set filetype=opencl
 au BufRead,BufNewFile wscript set filetype=python
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Backup
+" Backup, undo and swap
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set backup " always keep a backup of edited files
-set backupdir=~/.backup/ " Directory to store backup files in
+set backupdir=~/.vim/backup// " where to store backups
+set directory=~/.vim/swap// " where to store swap files
 set updatetime=750 " how often to save swap file in ms (and update gitgutter signs)
+set undofile " persistent undo
+set undodir=~/.vim/undo// " where to store undo files
 
 " suffix all backups with the current date and time
-au BufWritePre * let &backupext = ' ~ ' . strftime("%d-%m-%Y %X")
+au BufWritePre * let &backupext = '-' . strftime("%Y%m%d-%H%M%S")
 
 " create ~/.backup/ if it doesn't already exist
 if has("unix")
-    if !isdirectory(expand("~/.backup/"))
-        !mkdir -p ~/.backup/
+    if !isdirectory(expand("~/.vim/swap"))
+        :silent !mkdir -p ~/.vim/swap/ > /dev/null 2>&1
+    endif
+    if !isdirectory(expand("~/.vim/backup"))
+        :silent !mkdir -p ~/.vim/backup/ > /dev/null 2>&1
+    endif
+    if !isdirectory(expand("~/.vim/undo"))
+        :silent !mkdir -p ~/.vim/undo/ > /dev/null 2>&1
     endif
 endif
 
