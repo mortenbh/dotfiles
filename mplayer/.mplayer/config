@@ -1,0 +1,2 @@
+# automatically adjust pitch when changing playback speed
+af=scaletempo
