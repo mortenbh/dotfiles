@@ -24,6 +24,8 @@ Plug 'kana/vim-textobj-user' " user-defined text objects
 Plug 'Julian/vim-textobj-variable-segment' " snake_case and camelCase (v)
 Plug 'sgur/vim-textobj-parameter' " function arguments (,)
 Plug 'kopischke/vim-stay' " remember folds, cursor position, ...
+Plug 'tpope/vim-dispatch' " asynchronous :Make with tmux
+Plug 'christoomey/vim-tmux-navigator' " seamless navigation between vim and tmux
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -150,7 +152,8 @@ let g:C_FormatDate = "%d-%m-%Y"
 " Misc
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " avoid stupid 'hit enter' prompt on :make
-command! -nargs=* Make silent make <args> | redraw!
+" (no longer a problem with vim-dispatch)
+" command! -nargs=* Make silent make <args> | redraw!
 
 " use waf for :make if available
 if filereadable(getcwd() . "/waf")
