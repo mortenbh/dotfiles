@@ -155,3 +155,9 @@ endif
 
 " use C++-style comments
 autocmd FileType cpp set commentstring=\/\/%s
+
+" hide quickfix from :bnext, :bprev
+augroup QFix
+  autocmd!
+  autocmd FileType qf setlocal nobuflisted
+augroup END
