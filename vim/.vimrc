@@ -23,6 +23,7 @@ Plug 'rking/ag.vim' " the_silver_surfer 'ag'
 Plug 'kana/vim-textobj-user' " user-defined text objects
 Plug 'Julian/vim-textobj-variable-segment' " snake_case and camelCase (v)
 Plug 'sgur/vim-textobj-parameter' " function arguments (,)
+Plug 'kopischke/vim-stay' " remember folds, cursor position, ...
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -108,6 +109,9 @@ if has("unix")
         :silent !mkdir -p ~/.vim/undo/ > /dev/null 2>&1
     endif
 endif
+
+" store cursors and folds with :mkview (or with vim-stay)
+set viewoptions=cursor,folds,slash,unix
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Convenience mappings
