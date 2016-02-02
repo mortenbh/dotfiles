@@ -156,6 +156,9 @@ endif
 " use C++-style comments
 autocmd FileType cpp set commentstring=\/\/%s
 
+" generate a password with pwgen
+command! Pwgen execute 'normal i' . substitute(system('pwgen -sy 25 1'), '[\r\n]*$', '', '')
+
 " hide quickfix from :bnext, :bprev
 augroup QFix
   autocmd!
