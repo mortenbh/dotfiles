@@ -21,6 +21,7 @@ Plug 'airblade/vim-gitgutter' " show added, deleted and modified lines from Git
 Plug 'tpope/vim-fugitive' " integrate with Git
 Plug 'rking/ag.vim' " the_silver_surfer 'ag'
 Plug 'kana/vim-textobj-user' " user-defined text objects
+Plug 'noscript/vim-sleuth' " automatically detect and adjust indentation method
 Plug 'Julian/vim-textobj-variable-segment' " snake_case and camelCase (v)
 Plug 'sgur/vim-textobj-parameter' " function arguments (,)
 Plug 'kopischke/vim-stay' " remember folds, cursor position, ...
@@ -67,10 +68,9 @@ colorscheme jellybeans " My favourite color scheme
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Text formatting and layout
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set cindent " enable C-style indention (works for other languages too)
 set noexpandtab " do not expand tabs to spaces.
-set shiftwidth=3 " number of spaces to use for each step of (auto)indent.
-set tabstop=3 " set the number of spaces a TAB counts for.
+set tabstop=4 " set the number of spaces a TAB counts for.
+set shiftwidth=0 " use tabstop value
 set nowrap " disable wrapping of lines.
 set pastetoggle=<F11> " toggle paste-mode with F11
 let c_space_errors = 1 " highlight trailing spaces and more for c/cpp
@@ -148,6 +148,8 @@ let g:airline#extensions#tabline#enabled = 1 " show buffers
 " csupport |DATE| format
 let g:C_FormatDate = "%d-%m-%Y"
 
+
+let g:sleuth_trigger_ratio = 10 " 90% fuzz on hard/soft heuristics
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Misc
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
