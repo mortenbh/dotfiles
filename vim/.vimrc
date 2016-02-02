@@ -101,15 +101,15 @@ au BufWritePre * let &backupext = '-' . strftime("%Y%m%d-%H%M%S")
 
 " create ~/.backup/ if it doesn't already exist
 if has("unix")
-    if !isdirectory(expand("~/.vim/swap"))
-        :silent !mkdir -p ~/.vim/swap/ > /dev/null 2>&1
-    endif
-    if !isdirectory(expand("~/.vim/backup"))
-        :silent !mkdir -p ~/.vim/backup/ > /dev/null 2>&1
-    endif
-    if !isdirectory(expand("~/.vim/undo"))
-        :silent !mkdir -p ~/.vim/undo/ > /dev/null 2>&1
-    endif
+  if !isdirectory(expand("~/.vim/swap"))
+    :silent !mkdir -p ~/.vim/swap/ > /dev/null 2>&1
+  endif
+  if !isdirectory(expand("~/.vim/backup"))
+    :silent !mkdir -p ~/.vim/backup/ > /dev/null 2>&1
+  endif
+  if !isdirectory(expand("~/.vim/undo"))
+    :silent !mkdir -p ~/.vim/undo/ > /dev/null 2>&1
+  endif
 endif
 
 " store cursors and folds with :mkview (or with vim-stay)
