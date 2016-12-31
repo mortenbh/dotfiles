@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+if [ $# -lt 1 ]
+then
+   echo "$0 pass-name"
+   exit 1
+fi
+
+# check that required programs are installed
+for PRG in pass oathtool
+do
+   command -v $PRG >/dev/null 2>&1 || { echo >&2 "$PRG not installed."; exit 1; }
+done
+
+oathtool --base32 --totp $(pass $1 | sed -n -e 's/^totp: //p')
