@@ -1,15 +1,36 @@
 #!/usr/bin/env bash
 
+# check for arguments
+CLIPBOARD=false
+while getopts 'c' flag; do
+  case "${flag}" in
+    c) CLIPBOARD='true' ;;
+    *) error "Unexpected option ${flag}" ;;
+  esac
+done
+
+# shift $@ to remove arguments
+shift $((OPTIND-1))
+
+# must have at least one mass-argument
 if [ $# -lt 1 ]
 then
-   echo "$0 pass-name"
-   exit 1
+  echo "$(basename $0) -- retrieve TOTP from pass"
+  # echo " "
+  echo "$(basename $0) [options] pass-name"
+  echo "Options:"
+  echo "-c,   copy TOTP to clipboard"
+  exit 1
 fi
 
 # check that required programs are installed
-for PRG in pass oathtool
+for PRG in pass oathtool xclip
 do
-   command -v $PRG >/dev/null 2>&1 || { echo >&2 "$PRG not installed."; exit 1; }
+  command -v $PRG >/dev/null 2>&1 || { echo >&2 "$PRG not installed."; exit 1; }
 done
 
-oathtool --base32 --totp $(pass $1 | sed -n -e 's/^totp: //p')
+if $CLIPBOARD; then
+  oathtool --base32 --totp $(pass $@ | sed -n -e 's/^totp: //p') | xclip -selection c
+else
+  oathtool --base32 --totp $(pass $@ | sed -n -e 's/^totp: //p')
+fi
