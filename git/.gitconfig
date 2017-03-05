@@ -1,6 +1,6 @@
 [user]
-	email = morten@alas.dk
 	name = Morten Bojsen-Hansen
+	useConfigOnly = true
 [color]
 	diff = auto
 	status = auto
