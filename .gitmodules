@@ -1,3 +1,12 @@
 [submodule "kakoune/.config/kak/plugins/plug.kak"]
 	path = kakoune/.config/kak/plugins/plug.kak
 	url = https://github.com/andreyorst/plug.kak.git
+[submodule "awesome/.config/awesome/scratch"]
+	path = awesome/.config/awesome/scratch
+	url = https://github.com/notnew/awesome-scratch.git
+[submodule "awesome/.config/awesome/lain"]
+	path = awesome/.config/awesome/lain
+	url = https://github.com/lcpz/lain.git
+[submodule "awesome/.config/awesome/ezconfig"]
+	path = awesome/.config/awesome/ezconfig
+	url = https://github.com/gvalkov/awesome-ezconfig.git
