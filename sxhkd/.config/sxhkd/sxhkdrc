@@ -1,0 +1,14 @@
+super + Return
+	$TERMINAL
+super + d
+	dmenu_run
+super + shift + w
+	$BROWSER
+super + shift + g
+	gimp
+super + shift + s
+    spectacle
+ super + shift + x
+ 	prompt "Shutdown computer?" "sudo -A shutdown -h now"
+ super + shift + BackSpace
+ 	prompt "Reboot computer?" "sudo -A shutdown -r now"
