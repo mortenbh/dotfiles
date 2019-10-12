@@ -1,30 +1,26 @@
-snippet lic "Description" !b
-/** @file`!p
-import os
-name, ext = os.path.splitext(snip.fn.lower())
-if ext in ('.h', '.hpp'):
-	snip.rv = """
- *
- *  @brief      %s""" % name`
+snippet lic "License" !b
+/** @file
  *
  *  @date       `!v strftime('%d-%m-%Y %H:%M:%S')`
- *  @author     Morten Bojsen-Hansen <mortenbh@ist.ac.at>
+ *  @author     Morten Bojsen-Hansen <morten@alas.dk>
  *  @copyright  Morten Bojsen-Hansen (c) `!v strftime('%Y')`
  */
+
+
 endsnippet
 
 snippet once "Include header once only guard" !b
-#ifndef ${1:`!p
+#ifndef ${2:`!p
 if not snip.c:
 	name = re.sub(r'[^A-Za-z0-9]+','_', snip.fn).upper()
-	snip.rv = ('_%s' % name)
+	snip.rv = ('%s_' % name)
 else:
     snip.rv = snip.c`}
-#define $1
+#define $2
 
-${0}
+${1}${0}
 
-#endif // $1
+#endif // $2
 endsnippet
 
 snippet ns "namespace .. (namespace)" !
@@ -38,16 +34,16 @@ snippet cl "class .. (class)" !
 class ${1:`!p snip.rv = snip.basename or "name"`}
 {
 public:
-	${1/(\w+).*/$1/}(${2});
-	virtual ~${1/(\w+).*/$1/}();
+	$1(${2});
+	virtual ~$1();
 
 private:
 	${0:/* data */}
 };
 endsnippet
 
-snippet for "for loop (fori)" !
-for (${4:unsigned} ${2:i}=0; $2<${1:count}; ${3:++$2})
+snippet fori "for loop (fori)" !
+for (${4:int} ${2:i}=0; $2<${1:count}; ${3:++$2})
 {
 	${VISUAL}${0:${VISUAL/(.*)/(?1::\/* code *\/)/}}
 }
