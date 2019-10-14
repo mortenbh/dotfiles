@@ -45,6 +45,9 @@ map global user p '!xsel --output --clipboard<ret>' -docstring 'Paste from clipb
 # Line numbers.
 add-highlighter global/ number-lines
 
+# Show matching parentheses, braces, etc.
+add-highlighter global/ show-matching
+
 # Keep cursor at least 10 rows from the top or bottom of the window.
 set-option global scrolloff 10,0
 
