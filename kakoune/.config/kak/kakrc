@@ -54,4 +54,11 @@ set-option global scrolloff 10,0
 # Comment/uncomment line with #
 map global normal '#' :comment-line<ret>
 
+# Highlight current line.
+set-face global CursorLine default,rgb:383838+bd
+hook global RawKey .+ %{
+    try %{ remove-highlighter window/cursor-line }
+    try %{ add-highlighter window/cursor-line line %val{cursor_line} CursorLine }
+}
+
 colorscheme gruvbox
