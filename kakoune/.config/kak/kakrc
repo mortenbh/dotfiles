@@ -10,7 +10,8 @@ plug 'delapouite/kakoune-i3' %{
 
 # fzf fuzzy file finder integration
 plug 'andreyorst/fzf.kak' %{
-    map global normal <c-p> ': fzf-mode<ret>'
+    map global normal <c-p> ':fzf-mode<ret>f' -docstring 'Search for file.'
+    map global normal <c-b> ':fzf-mode<ret>b' -docstring 'Search for buffer.'
 } defer fzf %{
     # Use fd since it's faster.
     set-option global fzf_file_command 'fdfind'
