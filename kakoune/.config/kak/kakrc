@@ -51,4 +51,7 @@ add-highlighter global/ show-matching
 # Keep cursor at least 10 rows from the top or bottom of the window.
 set-option global scrolloff 10,0
 
+# Comment/uncomment line with #
+map global normal '#' :comment-line<ret>
+
 colorscheme gruvbox
