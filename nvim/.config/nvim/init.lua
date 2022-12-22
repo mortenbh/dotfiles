@@ -12,7 +12,8 @@
 vim.o.expandtab = true -- Expand tabs to spaces.
 vim.o.tabstop = 4 -- Set the number of spaces a TAB counts for.
 vim.o.shiftwidth = 0 -- Use tabstop value.
-vim.wo.number = true -- Line numbers.
+vim.o.number = true -- Line numbers.
+vim.o.relativenumber = true -- Relative line numbers.
 vim.o.mouse = 'a' -- Enable the use of mouse clicks in all modes.
 vim.o.scrolloff = 10 -- Minimum number of screen lines to keep above and below the cursor.
 vim.o.cursorline = true -- Gighlight line currently under the cursor.
@@ -25,14 +26,25 @@ vim.o.termguicolors = true -- True color support.
 vim.g.mapleader = ',' -- Set <Leader>.
 vim.g.maplocalleader = ',' -- Set <LocalLeader>.
 
+-- Add a timestamp to backup files.
+vim.api.nvim_create_autocmd('BufWritePre', {
+  desc = 'Add a timestamp to backup files',
+  pattern = '*',
+  callback = function() vim.opt.backupext = vim.fn.strftime(' @ %Y-%m-%d %H:%M:%S') end
+})
+
 -- Convenience mappings.
 vim.keymap.set('n', 'gk', 'gg', { noremap = true, desc = '[G]o to start of file' })
 vim.keymap.set('n', 'gj', 'G', { noremap = true, desc = '[G]o to end of file' })
 vim.keymap.set('n', 'gh', '^', { noremap = true, desc = '[G]o to start of line' })
 vim.keymap.set('n', 'gl', '$', { noremap = true, desc = '[G]o to end of line' })
--- vim.keymap.set('n', '<leader>w', ':w<cr>', { noremap = true, silent = true, desc = '[W]rite buffer' })
--- vim.keymap.set('n', '<leader>d', ':bd<cr>', { noremap = true, silent = true, desc = 'Buffer [d]elete' })
--- vim.keymap.set('n', '<leader>q', ':qa<cr>', { noremap = true, silent = true, desc = '[Q]uit all' })
+vim.keymap.set('v', 'J', ":m '>+1<cr>gv=gv", { desc = 'Move selection down' })
+vim.keymap.set('v', 'K', ":m '<-2<cr>gv=gv", { desc = 'Move selection up' })
+vim.keymap.set('n', 'J', 'mzJ`z', { desc = 'Join lines' })
+vim.keymap.set('x', '<Leader>p', '\"_dP', { desc = 'Paste without overwriting the default register' })
+-- vim.keymap.set('n', '<Leader>w', ':w<CR>', { noremap = true, silent = true, desc = '[W]rite buffer' })
+-- vim.keymap.set('n', '<Leader>d', ':bd<CR>', { noremap = true, silent = true, desc = 'Buffer [d]elete' })
+-- vim.keymap.set('n', '<Leader>q', ':qa<CR>', { noremap = true, silent = true, desc = '[Q]uit all' })
 
 -- Bootstrap package manager.
 do
@@ -85,15 +97,15 @@ require("lazy").setup {
                     vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
                 end
 
-                nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-                nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+                nmap('<Leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+                nmap('<Leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
                 nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
                 nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
                 nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
-                nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-                nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-                -- nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+                nmap('<Leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
+                nmap('<Leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+                -- nmap('<Leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
                 -- See `:help K` for why this keymap
                 nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
@@ -101,9 +113,9 @@ require("lazy").setup {
 
                 -- Lesser used LSP functionality
                 nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-                -- nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
-                -- nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
-                -- nmap('<leader>wl', function()
+                -- nmap('<Leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
+                -- nmap('<Leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
+                -- nmap('<Leader>wl', function()
                 --     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
                 -- end, '[W]orkspace [L]ist Folders')
 
@@ -169,12 +181,12 @@ require("lazy").setup {
                     end,
                 },
                 mapping = cmp.mapping.preset.insert {
-                    ['<c-space>'] = cmp.mapping.complete(),
-                    ['<cr>'] = cmp.mapping.confirm {
+                    ['<C-Space>'] = cmp.mapping.complete(),
+                    ['<CR>'] = cmp.mapping.confirm {
                         behavior = cmp.ConfirmBehavior.Replace,
                         select = true,
                     },
-                    ['<c-j>'] = cmp.mapping(function(fallback)
+                    ['<C-j>'] = cmp.mapping(function(fallback)
                         if cmp.visible() then
                             cmp.select_next_item()
                         elseif snip.expand_or_jumpable() then
@@ -183,7 +195,7 @@ require("lazy").setup {
                             fallback()
                         end
                     end, { 'i', 's' }),
-                    ['<c-k>'] = cmp.mapping(function(fallback)
+                    ['<C-k>'] = cmp.mapping(function(fallback)
                         if cmp.visible() then
                             cmp.select_prev_item()
                         elseif snip.jumpable(-1) then
@@ -246,11 +258,11 @@ require("lazy").setup {
             }
 
             local builtin = require('telescope.builtin')
-            vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
-            vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
-            vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-            vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
-            vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
+            vim.keymap.set('n', '<Leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
+            vim.keymap.set('n', '<Leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
+            vim.keymap.set('n', '<Leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
+            vim.keymap.set('n', '<Leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+            vim.keymap.set('n', '<Leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
         end
     },
 
@@ -279,10 +291,10 @@ require("lazy").setup {
         'cdelledonne/vim-cmake',
         config = function()
             vim.g.cmake_link_compile_commands = true -- Make symlink to compile_commands.json.
-            -- vim.keymap.set('', '<leader>cg', ':CMakeGenerate<cr>', { desc = '[C]Make [G]enerate' })
-            -- vim.keymap.set('', '<leader>cb', ':CMakeBuild<cr>', { desc = '[C]Make [B]uild' })
-            -- vim.keymap.set('', '<leader>cq', ':CMakeClose<cr>', { desc = '[C]Make [Q]uit' })
-            -- vim.keymap.set('', '<leader>cc', ':CMakeClean<cr>', { desc = '[C]Make [C]lean' })
+            -- vim.keymap.set('', '<Leader>cg', ':CMakeGenerate<CR>', { desc = '[C]Make [G]enerate' })
+            -- vim.keymap.set('', '<Leader>cb', ':CMakeBuild<CR>', { desc = '[C]Make [B]uild' })
+            -- vim.keymap.set('', '<Leader>cq', ':CMakeClose<CR>', { desc = '[C]Make [Q]uit' })
+            -- vim.keymap.set('', '<Leader>cc', ':CMakeClean<CR>', { desc = '[C]Make [C]lean' })
         end
     },
 }
