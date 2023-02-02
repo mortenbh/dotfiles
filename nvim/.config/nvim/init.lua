@@ -25,6 +25,7 @@ vim.o.undofile = true -- Persistent undo.
 vim.o.termguicolors = true -- True color support.
 vim.g.mapleader = ',' -- Set <Leader>.
 vim.g.maplocalleader = ',' -- Set <LocalLeader>.
+vim.o.wildmode = 'full:longest' -- When auto-completing, show navigatable list and longest common prefix.
 
 -- Add a timestamp to backup files.
 vim.api.nvim_create_autocmd('BufWritePre', {
@@ -34,6 +35,8 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 })
 
 -- Convenience mappings.
+vim.keymap.set('c', '<C-j>', '<C-n>', { noremap = true, desc = 'Move to next wildmenu item' })
+vim.keymap.set('c', '<C-k>', '<C-p>', { noremap = true, desc = 'Move to previous wildmenu item' })
 vim.keymap.set('n', 'gk', 'gg', { noremap = true, desc = '[G]o to start of file' })
 vim.keymap.set('n', 'gj', 'G', { noremap = true, desc = '[G]o to end of file' })
 vim.keymap.set('n', 'gh', '^', { noremap = true, desc = '[G]o to start of line' })
