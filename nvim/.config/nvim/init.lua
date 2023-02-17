@@ -296,6 +296,16 @@ require("lazy").setup {
         config = function() require("transparent").setup { enable = true } end
     },
 
+    -- This plugin adds indentation guides to all lines (including empty lines).
+    {
+        'lukas-reineke/indent-blankline.nvim',
+        config = function()
+            require("indent_blankline").setup {
+                show_current_context = true, -- Highlight current context using treesitter.
+            }
+        end
+    },
+
     {
         'cdelledonne/vim-cmake',
         config = function()
