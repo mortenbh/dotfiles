@@ -26,6 +26,7 @@ vim.o.termguicolors = true -- True color support.
 vim.g.mapleader = ',' -- Set <Leader>.
 vim.g.maplocalleader = ',' -- Set <LocalLeader>.
 vim.o.wildmode = 'full:longest' -- When auto-completing, show navigatable list and longest common prefix.
+vim.o.wrap = false -- Disable wrapping of lines.
 
 -- Add a timestamp to backup files.
 vim.api.nvim_create_autocmd('BufWritePre', {
