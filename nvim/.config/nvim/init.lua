@@ -28,11 +28,16 @@ vim.g.maplocalleader = ',' -- Set <LocalLeader>.
 vim.o.wildmode = 'full:longest' -- When auto-completing, show navigatable list and longest common prefix.
 vim.o.wrap = false -- Disable wrapping of lines.
 
--- Add a timestamp to backup files.
 vim.api.nvim_create_autocmd('BufWritePre', {
   desc = 'Add a timestamp to backup files',
   pattern = '*',
   callback = function() vim.opt.backupext = vim.fn.strftime(' @ %Y-%m-%d %H:%M:%S') end
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+  desc = 'Disable insertion of comment leader',
+  pattern = '*',
+  callback = function() vim.opt.formatoptions:remove({'c','r','o'}) end
 })
 
 -- Convenience mappings.
