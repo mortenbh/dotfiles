@@ -16,7 +16,7 @@ vim.o.number = true -- Line numbers.
 vim.o.relativenumber = true -- Relative line numbers.
 vim.o.mouse = 'a' -- Enable the use of mouse clicks in all modes.
 vim.o.scrolloff = 10 -- Minimum number of screen lines to keep above and below the cursor.
-vim.o.cursorline = true -- Gighlight line currently under the cursor.
+vim.o.cursorline = true -- Highlight line under the cursor.
 vim.o.ignorecase = true -- Ignore case in searches.
 vim.o.smartcase = true -- Overrides ignorecase if search pattern contains upper-case.
 vim.o.backup = true -- Always keep a backup of edited files.
@@ -49,11 +49,19 @@ vim.keymap.set('n', 'gh', '^', { noremap = true, desc = '[G]o to start of line' 
 vim.keymap.set('n', 'gl', '$', { noremap = true, desc = '[G]o to end of line' })
 vim.keymap.set('v', 'J', ":m '>+1<cr>gv=gv", { desc = 'Move selection down' })
 vim.keymap.set('v', 'K', ":m '<-2<cr>gv=gv", { desc = 'Move selection up' })
-vim.keymap.set('n', 'J', 'mzJ`z', { desc = 'Join lines' })
 vim.keymap.set('x', '<Leader>p', '\"_dP', { desc = 'Paste without overwriting the default register' })
--- vim.keymap.set('n', '<Leader>w', ':w<CR>', { noremap = true, silent = true, desc = '[W]rite buffer' })
--- vim.keymap.set('n', '<Leader>d', ':bd<CR>', { noremap = true, silent = true, desc = 'Buffer [d]elete' })
--- vim.keymap.set('n', '<Leader>q', ':qa<CR>', { noremap = true, silent = true, desc = '[Q]uit all' })
+
+vim.api.nvim_create_autocmd('LspAttach', {
+    callback = function(e)
+        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = e.buf, desc = '[G]oto [D]efinition' })
+        vim.keymap.set('n', 'gd', vim.lsp.buf.declaration, { buffer = e.buf, desc = '[G]oto [D]eclaration' })
+        -- See `:help K` for why this keymap
+        vim.keymap.set('n', 'K', vim.lsp.buf.hover, { buffer = e.buf, desc = 'Hover Documentation' })
+        vim.keymap.set('n', '<C-h>', vim.lsp.buf.signature_help, { buffer = e.buf, desc = 'Signature [H]elp' })
+        vim.keymap.set('n', '[d', vim.diagnostic.goto_next, { buffer = e.buf, desc = '[D]iagnostic previous' })
+        vim.keymap.set('n', ']d', vim.diagnostic.goto_prev, { buffer = e.buf, desc = '[D]iagnostic next' })
+    end
+})
 
 -- Bootstrap package manager.
 do
@@ -79,75 +87,12 @@ require("lazy").setup {
             'williamboman/mason-lspconfig.nvim',
         },
         config = function()
-            local servers = {
-                clangd = {},
-                rust_analyzer = {},
-                pyright = {},
-                tsserver = {},
-                sumneko_lua = {
-                    Lua = {
-                        -- Suppress lots of 'Undefined global `vim`' warnings.
-                        diagnostics = { globals = { 'vim' }, },
-                        -- Do not send telemetry data containing a randomized but unique identifier.
-                        telemetry = { enable = false },
-                    }
-                },
-                gopls = {}
-            }
-
-            -- Send additional capabilities supported by nvim-cmp to LSP server.
-            local capabilities = vim.lsp.protocol.make_client_capabilities()
-            capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-
-            --  This function gets run when an LSP connects to a particular buffer.
-            local on_attach = function(_, bufnr)
-                local nmap = function(keys, func, desc)
-                    if desc then desc = 'LSP: ' .. desc end
-                    vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
-                end
-
-                nmap('<Leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-                nmap('<Leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-
-                nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-                nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-                nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
-                nmap('<Leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-                nmap('<Leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-                -- nmap('<Leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
-
-                -- See `:help K` for why this keymap
-                nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-                nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
-
-                -- Lesser used LSP functionality
-                nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-                -- nmap('<Leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
-                -- nmap('<Leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
-                -- nmap('<Leader>wl', function()
-                --     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-                -- end, '[W]orkspace [L]ist Folders')
-
-                -- Create a command `:Format` local to the LSP buffer
-                vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-                    if vim.lsp.buf.format then
-                        vim.lsp.buf.format()
-                    elseif vim.lsp.buf.formatting then
-                        vim.lsp.buf.formatting()
-                    end
-                end, { desc = 'Format current buffer with LSP' })
-            end
-
             require("mason").setup()
-            require("mason-lspconfig").setup { ensure_installed = vim.tbl_keys(servers) }
+            require("mason-lspconfig").setup {
+                ensure_installed = { "clangd", "pyright" }
+            }
             require("mason-lspconfig").setup_handlers {
-                function(server)
-                    require('lspconfig')[server].setup {
-                        capabilities = capabilities,
-                        on_attach = on_attach,
-                        settings = servers[server],
-                    }
-                end
+                function(server) require('lspconfig')[server].setup {} end
             }
         end
     },
@@ -157,15 +102,10 @@ require("lazy").setup {
         'nvim-treesitter/nvim-treesitter',
         config = function()
             require('nvim-treesitter.configs').setup {
-                ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'help' },
+                ensure_installed = { 'c', 'cpp', 'python', 'vimdoc' },
                 highlight = { enable = true, },
             }
         end
-    },
-
-    {
-        'nvim-treesitter/nvim-treesitter-context',
-        dependencies = { 'nvim-treesitter/nvim-treesitter' }
     },
 
     -- Auto-completion.
@@ -176,12 +116,9 @@ require("lazy").setup {
             'hrsh7th/cmp-path',
             'hrsh7th/cmp-buffer',
             'hrsh7th/cmp-cmdline',
-            'L3MON4D3/LuaSnip',
-            'saadparwaiz1/cmp_luasnip',
         },
         config = function()
             local cmp = require('cmp')
-            local snip = require('luasnip')
 
             cmp.setup {
                 snippet = {
@@ -198,8 +135,6 @@ require("lazy").setup {
                     ['<C-j>'] = cmp.mapping(function(fallback)
                         if cmp.visible() then
                             cmp.select_next_item()
-                        elseif snip.expand_or_jumpable() then
-                            snip.expand_or_jump()
                         else
                             fallback()
                         end
@@ -207,8 +142,6 @@ require("lazy").setup {
                     ['<C-k>'] = cmp.mapping(function(fallback)
                         if cmp.visible() then
                             cmp.select_prev_item()
-                        elseif snip.jumpable(-1) then
-                            snip.jump(-1)
                         else
                             fallback()
                         end
@@ -219,16 +152,15 @@ require("lazy").setup {
                     { name = 'buffer' },
                     { name = 'path' },
                     { name = 'cmdline' },
-                    { name = 'luasnip' },
                 },
             }
         end
     },
 
-    -- Theme inspired by Atom / VS Code.
+    -- Theme
     {
-        'navarasu/onedark.nvim',
-        config = function() require('onedark').load() end
+        'Mofiqul/dracula.nvim',
+        config = function() vim.cmd('colorscheme dracula') end
     },
 
     -- Fancier statusline.
@@ -249,7 +181,7 @@ require("lazy").setup {
     -- Telescope is a highly extensible fuzzy finder for Neovim.
     {
         'nvim-telescope/telescope.nvim',
-        tag = '0.1.0',
+        tag = '0.1.6',
         dependencies = { 'nvim-lua/plenary.nvim' },
         config = function()
             local actions = require('telescope.actions')
@@ -279,8 +211,7 @@ require("lazy").setup {
     -- Use fzf as sorter in Telescope. It's faster and supports fzf patterns such as 'exact matches.
     {
         'nvim-telescope/telescope-fzf-native.nvim',
-        build = 'make',
-        cond = vim.fn.executable 'make' == 1, -- Only load if `make` is available.
+        build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
         dependencies = { 'nvim-telescope/telescope.nvim' },
         config = function() require('telescope').load_extension('fzf') end
     },
@@ -292,29 +223,25 @@ require("lazy").setup {
     },
 
     -- Transparent background in Neovim. Does what it says on the tin.
+    -- Enable with :TransparentEnable (cached).
     {
         'xiyaowong/nvim-transparent',
-        config = function() require("transparent").setup { enable = true } end
     },
 
-    -- This plugin adds indentation guides to all lines (including empty lines).
+    -- :Git <cmd>
+    { 'tpope/vim-fugitive' },
+
+    -- Git decorations
+    -- Neovim file explorer.
     {
-        'lukas-reineke/indent-blankline.nvim',
-        config = function()
-            require("indent_blankline").setup {
-                show_current_context = true, -- Highlight current context using treesitter.
-            }
-        end
+        'stevearc/oil.nvim',
+        config = function() require('oil').setup() end,
     },
 
+    -- Nerd fonts
+    -- Run :NvimWebDeviconsHiTest to verify that it works.
     {
-        'cdelledonne/vim-cmake',
-        config = function()
-            vim.g.cmake_link_compile_commands = true -- Make symlink to compile_commands.json.
-            -- vim.keymap.set('', '<Leader>cg', ':CMakeGenerate<CR>', { desc = '[C]Make [G]enerate' })
-            -- vim.keymap.set('', '<Leader>cb', ':CMakeBuild<CR>', { desc = '[C]Make [B]uild' })
-            -- vim.keymap.set('', '<Leader>cq', ':CMakeClose<CR>', { desc = '[C]Make [Q]uit' })
-            -- vim.keymap.set('', '<Leader>cc', ':CMakeClean<CR>', { desc = '[C]Make [C]lean' })
-        end
+        'nvim-tree/nvim-web-devicons',
+        config = function() require('nvim-web-devicons').setup() end
     },
 }
